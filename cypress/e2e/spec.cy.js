@@ -1,21 +1,20 @@
 describe('case 1', () => {
   before(() =>{
-    cy.visit('https://www.demoblaze.com/');
+    cy.visit("https://qa-sp.docs-dev.bosch-fsde.com/");
+        cy.get(':nth-child(4) > .MuiButton-text').click();
   })
-  it.skip('click on Phones', () => {
-    cy.get('a[id="itemc"]').contains('Phones').click()
+  it.skip('search bar', () => {
+    cy.get('.MuiFormControl-root').click();
   })
 
   it('click on iphone 6 32gb',() =>{
-    cy.get('a[class="hrefch"]').contains('Iphone 6 32gb').click()
+    
+      cy.get('.MuiFilledInput-root').type("DocHub");
+      cy.get('[aria-label=search]').click()
+      cy.get('.MuiCardContent-root > :nth-child(2) > .MuiTypography-root').should('have.text', "DocHub");
+      cy.get('[aria-label=Clear]').click()
+  
   })
 
-  it('add to cart',() =>{
-    cy.get('a').contains('Add to cart',{timeout:5000}).click()
-  })
-
-  it('click on Home',() =>{
-    cy.get('a').contains('Home').click()
-  })
 })
 //f3qf3

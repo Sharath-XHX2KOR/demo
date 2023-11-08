@@ -3,27 +3,21 @@ version: '3.8'
 services:
   e2e-chrome:
     build: .
-    # command: "-b chrome"
-    environment:
-      - browser:chrome
+    command: "-b chrome"
     volumes:
       - ./artifacts/chrome/videos:/e2e/cypress/videos
       - ./artifacts/chrome/screenshots:/e2e/cypress/screenshots
   
   e2e-firefox:
     build: .
-    # command: "-b firefox"
-    environment:
-      - browser:firefox
+    command: "-b firefox"
     # entrypoint: "npx cypress run --browser firefox -c video=false"
     volumes:
       - ./artifacts/firefox/screenshots:/e2e/cypress/screenshots
   
   e2e-edge:
     build: .
-    # command: "-b edge"
-    environment:
-      - browser:edge
+    command: "-b edge"
     # entrypoint: "npx cypress run --browser edge"
     volumes:
       - ./artifacts/edge/videos:/e2e/cypress/videos

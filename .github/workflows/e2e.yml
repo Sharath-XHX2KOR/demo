@@ -1,29 +1,74 @@
-name: cross browser testing 
+name: Cypress Tests
 
 on:
   push:
     branches:
-      - "integration"
-      - "main"
-  pull_request:
-    types: [opened,reopened]
+      - main
 
 jobs:
-  cypress-run:
+  e2e-tests:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
-
-    strategy:
-      fail-fast: false
-      matrix:
-        containers: [1,2,3,4]
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Docker
+        uses: actions/setup-docker@v2
+        with:
+          dockerfile: ./Dockerfile
+
+      - name: Build and run Docker Compose
+        run: docker-compose up -d
+        working-directory: ./docker-compose.yml
+
+      - name: Wait for Cypress tests to finish
+        run: sleep 60
+
+      - name: Download artifacts
+        run: |
+          docker cp container_name:/e2e/cypress/screenshots ./artifacts
+        working-directory: ./docker-compose.yml
+
+      - name: Stop and remove Docker Compose containers
+        run: docker-compose down
+        working-directory: ./docker-compose.yml
+
+# name: cross browser testing 
+
+# on:
+#   push:
+#     branches:
+#       - "integration"
+#       - "main"
+#   pull_request:
+#     types: [opened,reopened]
+
+# jobs:
+#   cypress-run:
+#     runs-on: ubuntu-latest
+#     container:
+#       image: cypress/browsers:node-20.9.0-chrome-118.0.5993.88-1-ff-118.0.2-edge-118.0.2088.46-1
+#     needs: install
+#     timeout-minutes: 5
+
+#     strategy:
+#       fail-fast: false
+#       matrix:
+#         browser: [chrome, firefox, edge, electron]
+
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4
+
+#       - name: cypress run
+#         uses: cypress-io/github-action@v6
+#         with:
+#           build: npm run build
+#           start: npm start
+#           browser: chrome
+#       # - name: Build Docker image
+#       #   run: docker build -t my-img .
       
-      - name: Build Docker image
-        run: docker build -t my-img .
-      
-      - name: Run cypress tests
-        run: docker run -it --rm my-img
+#       # - name: Run cypress tests
+#       #   run: docker run -it --rm my-img

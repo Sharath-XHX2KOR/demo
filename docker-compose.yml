@@ -2,29 +2,68 @@ version: '3.8'
 
 services:
   e2e-chrome:
-    build: .
-    command: "-b chrome"
+    image: my-cypress-image:chrome
+    build:
+      context: .
+      dockerfile: Dockerfile
     volumes:
+      - ./artifacts/chrome:/e2e/cypress/screenshots
       - ./artifacts/chrome/videos:/e2e/cypress/videos
-      - ./artifacts/chrome/screenshots:/e2e/cypress/screenshots
-  
+
   e2e-firefox:
-    build: .
-    command: "-b firefox"
-    # entrypoint: "npx cypress run --browser firefox -c video=false"
+    image: my-cypress-image:firefox
+    build:
+      context: .
+      dockerfile: Dockerfile
     volumes:
-      - ./artifacts/firefox/screenshots:/e2e/cypress/screenshots
-  
-  e2e-edge:
-    build: .
-    command: "-b edge"
-    # entrypoint: "npx cypress run --browser edge"
-    volumes:
-      - ./artifacts/edge/videos:/e2e/cypress/videos
-      - ./artifacts/edge/screenshots:/e2e/cypress/screenshots
-  
+      - ./artifacts/firefox:/e2e/cypress/screenshots
+      - ./artifacts/chrome/videos:/e2e/cypress/videos
+
   e2e-electron:
-    build: .
+    image: my-cypress-image:electron
+    build:
+      context: .
+      dockerfile: Dockerfile
     volumes:
-      - ./artifacts/electron/videos:/e2e/cypress/videos
-      - ./artifacts/electron/screenshots:/e2e/cypress/screenshots
+      - ./artifacts/electron:/e2e/cypress/screenshots
+      - ./artifacts/chrome/videos:/e2e/cypress/videos
+
+  e2e-edge:
+    image: my-cypress-image:edge
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./artifacts/edge:/e2e/cypress/screenshots
+      - ./artifacts/chrome/videos:/e2e/cypress/videos
+
+# version: '3.8'
+
+# services:
+#   e2e-chrome:
+#     build: .
+#     command: "-b chrome"
+#     volumes:
+#       - ./artifacts/chrome/videos:/e2e/cypress/videos
+#       - ./artifacts/chrome/screenshots:/e2e/cypress/screenshots
+  
+#   e2e-firefox:
+#     build: .
+#     command: "-b firefox"
+#     # entrypoint: "npx cypress run --browser firefox -c video=false"
+#     volumes:
+#       - ./artifacts/firefox/screenshots:/e2e/cypress/screenshots
+  
+#   e2e-edge:
+#     build: .
+#     command: "-b edge"
+#     # entrypoint: "npx cypress run --browser edge"
+#     volumes:
+#       - ./artifacts/edge/videos:/e2e/cypress/videos
+#       - ./artifacts/edge/screenshots:/e2e/cypress/screenshots
+  
+#   e2e-electron:
+#     build: .
+#     volumes:
+#       - ./artifacts/electron/videos:/e2e/cypress/videos
+#       - ./artifacts/electron/screenshots:/e2e/cypress/screenshots

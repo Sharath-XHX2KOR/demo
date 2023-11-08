@@ -18,7 +18,7 @@ services:
   e2e-edge:
     build: .
     command: "-b edge"
-    entrypoint: "npx cypress run --browser edge"
+    # entrypoint: "npx cypress run --browser edge"
     volumes:
       - ./artifacts/edge/videos:/e2e/cypress/videos
       - ./artifacts/edge/screenshots:/e2e/cypress/screenshots

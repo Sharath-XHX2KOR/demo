@@ -16,7 +16,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Cypress install
-        uses: cypress-io/github-action@v6
+        uses: cypress-io/github-action@v2.2.7
         with:
           runsTests: false #disable running tests within install job. We are just caching it so we can reuse it multiple times
           build: npm run build
@@ -46,10 +46,9 @@ jobs:
           name: build
         
       - name: Cypress run
-        uses: cypress-io/github-action@v6
+        uses: cypress-io/github-action@v2.2.7
         with:
           record: true
           parallel: true
           group: 'UI-Chrome'
           start: npm start
-          

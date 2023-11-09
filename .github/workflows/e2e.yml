@@ -19,7 +19,7 @@ jobs:
         uses: cypress-io/github-action@v4
         with:
           #disable running tests within install job. We are just caching it so we can reuse it multiple times
-          runsTests: false 
+          runTests: false 
           build: npm run build
 
       - name: Save build folder

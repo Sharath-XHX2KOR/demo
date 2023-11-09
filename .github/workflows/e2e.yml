@@ -1,74 +1,54 @@
-name: Cypress Tests
+name: cross browser testing 
 
 on:
   push:
     branches:
-      - main
       - "integration"
+      - "main"
+  pull_request:
+    types: [opened,reopened]
+
 jobs:
-  e2e-tests:
+  install:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - name: Set up Docker
-        uses: actions/setup-docker@v2
+      - name: Cypress install
+        uses: cypress-io/github-action@v6
         with:
-          dockerfile: ./Dockerfile
+          runsTests: false #disable running tests within install job. We are just caching it so we can reuse it multiple times
+          build: npm run build
 
-      - name: Build and run Docker Compose
-        run: docker-compose up -d
-        working-directory: ./docker-compose.yml
-
-      - name: Wait for Cypress tests to finish
-        run: sleep 60
-
-      - name: Download artifacts
-        run: |
-          docker cp container_name:/e2e/cypress/screenshots ./artifacts
-        working-directory: ./docker-compose.yml
-
-      - name: Stop and remove Docker Compose containers
-        run: docker-compose down
-        working-directory: ./docker-compose.yml
-
-# name: cross browser testing 
-
-# on:
-#   push:
-#     branches:
-#       - "integration"
-#       - "main"
-#   pull_request:
-#     types: [opened,reopened]
-
-# jobs:
-#   cypress-run:
-#     runs-on: ubuntu-latest
-#     container:
-#       image: cypress/browsers:node-20.9.0-chrome-118.0.5993.88-1-ff-118.0.2-edge-118.0.2088.46-1
-#     needs: install
-#     timeout-minutes: 5
-
-#     strategy:
-#       fail-fast: false
-#       matrix:
-#         browser: [chrome, firefox, edge, electron]
-
-#     steps:
-#       - name: Checkout
-#         uses: actions/checkout@v4
-
-#       - name: cypress run
-#         uses: cypress-io/github-action@v6
-#         with:
-#           build: npm run build
-#           start: npm start
-#           browser: chrome
-#       # - name: Build Docker image
-#       #   run: docker build -t my-img .
+      - name: Save build folder
+        uses: actions/upload-artifacts@v3
+        with:
+          name: build
+          if-no-files-found: error
+          path: dist
+  
+  cypress-run:
+    runs-on: ubuntu-latest
+    needs: install
+    strategy:
+      fail-fast: false
+      matrix:
+        container: [1,2,3,4]
       
-#       # - name: Run cypress tests
-#       #   run: docker run -it --rm my-img
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Download the build folder
+        uses: actions/download-artifacts@v3
+        with:
+          name: build
+        
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
+        with:
+          record: true
+          parallel: true
+          group: 'UI-Chrome'
+          start: npm start

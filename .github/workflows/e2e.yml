@@ -10,7 +10,7 @@ on:
 
 jobs:
   install:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -18,7 +18,7 @@ jobs:
       - name: Cypress install
         uses: cypress-io/github-action@v4
         with:
-        #disable running tests within install job. We are just caching it so we can reuse it multiple times
+          #disable running tests within install job. We are just caching it so we can reuse it multiple times
           runsTests: false 
           build: npm run build
 

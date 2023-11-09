@@ -10,13 +10,13 @@ on:
 
 jobs:
   install:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
       - name: Cypress install
-        uses: cypress-io/github-action@v4
+        uses: cypress-io/github-action@v6
         with:
           #disable running tests within install job. We are just caching it so we can reuse it multiple times
           runTests: false 
@@ -35,7 +35,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        container: [1,2,3,4]
+        browser: ['chrome', 'firefox', 'edge', 'electron']
       
     steps:
       - name: Checkout
@@ -47,9 +47,10 @@ jobs:
           name: build
         
       - name: Cypress run
-        uses: cypress-io/github-action@v4
-        with:
-          record: true
-          parallel: true
-          group: 'UI-Chrome'
-          start: npm start
+        run: |
+          if [ "${{ matrix.browser }}" == "electron" ]; then
+            npm run test-electron
+          else
+            npm run test-browser -- --browser "${{ matrix.browser }}"
+          fi
+          

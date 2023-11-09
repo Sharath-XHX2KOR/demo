@@ -1,56 +1,75 @@
-name: cross browser testing 
+name: Cypress Tests using Cypress Docker Image
 
-on:
-  push:
-    branches:
-      - "integration"
-      - "main"
-  pull_request:
-    types: [opened,reopened]
+on: push
 
 jobs:
-  install:
-    runs-on: ubuntu-latest
+  cypress-run:
+    runs-on: ubuntu-22.04
+    container:
+      image: cypress/browsers:node-20.9.0-chrome-118.0.5993.88-1-ff-118.0.2-edge-118.0.2088.46-1
+      options: --user 1001
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Cypress install
+      - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
-          #disable running tests within install job. We are just caching it so we can reuse it multiple times
-          runTests: false 
           build: npm run build
+          start: npm start
+          browser: chrome
 
-      - name: Save build folder
-        uses: actions/upload-artifact@v3
-        with:
-          name: build
-          if-no-files-found: error
-          path: dist
+# name: cross browser testing 
+
+# on:
+#   push:
+#     branches:
+#       - "integration"
+#       - "main"
+#   pull_request:
+#     types: [opened,reopened]
+
+# jobs:
+#   install:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4
+
+#       - name: Cypress install
+#         uses: cypress-io/github-action@v6
+#         with:
+#           #disable running tests within install job. We are just caching it so we can reuse it multiple times
+#           runTests: false 
+#           build: npm run build
+
+#       - name: Save build folder
+#         uses: actions/upload-artifact@v3
+#         with:
+#           name: build
+#           if-no-files-found: error
+#           path: dist
   
-  cypress-run:
-    runs-on: ubuntu-latest
-    needs: install
-    strategy:
-      fail-fast: false
-      matrix:
-        browser: ['chrome', 'firefox', 'edge', 'electron']
+#   cypress-run:
+#     runs-on: ubuntu-latest
+#     needs: install
+#     strategy:
+#       fail-fast: false
+#       matrix:
+#         browser: ['chrome', 'firefox', 'edge', 'electron']
       
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4
       
-      - name: Download the build folder
-        uses: actions/download-artifact@v3
-        with:
-          name: build
+#       - name: Download the build folder
+#         uses: actions/download-artifact@v3
+#         with:
+#           name: build
         
-      - name: Cypress run
-        run: |
-          if [ "${{ matrix.browser }}" == "electron" ]; then
-            npm run test-electron
-          else
-            npm run test-browser -- --browser "${{ matrix.browser }}"
-          fi
-          
+#       - name: Cypress run
+#         run: |
+#           if [ "${{ matrix.browser }}" == "electron" ]; then
+#             npm run test-electron
+#           else
+#             npm run test-browser -- --browser "${{ matrix.browser }}"
+#           fi

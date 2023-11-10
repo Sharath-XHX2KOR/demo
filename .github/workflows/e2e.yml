@@ -25,11 +25,13 @@ jobs:
         run: docker build -t cypress-tests .
 
       - name: Run Cypress Tests
+        env:
+          BROWSER: ${{ matrix.browser }}
         run: |
           docker run --rm -e BROWSER=$BROWSER cypress-tests
 
-        env:
-          BROWSER: ${{ matrix.browser }}
+        # env:
+        #   BROWSER: ${{ matrix.browser }}
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v2

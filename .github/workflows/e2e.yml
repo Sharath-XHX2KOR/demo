@@ -43,6 +43,8 @@ jobs:
 
       - name: Cypress install
         uses: cypress-io/github-action@v6
+        with:
+          runTests: false
       
       - name: Cypress run
         run: |
@@ -51,3 +53,13 @@ jobs:
           else
             npm run test -- --browser "${{ matrix.browser }}"
           fi
+
+      - name: Upload Chrome artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: chrome-artifacts
+          path: |
+            ./artifacts/chrome/videos
+            ./artifacts/chrome/screenshots
+          if-no-files-found: ignore
+          retention-days: 5

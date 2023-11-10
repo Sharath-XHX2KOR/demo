@@ -40,7 +40,7 @@ jobs:
         with:
           #disable running tests within install job. We are just caching it so we can reuse it multiple times
           runTests: false 
-          build: npm run build
+          build: npm run test
 
       - name: Save build folder
         uses: actions/upload-artifact@v3

@@ -47,7 +47,7 @@ jobs:
       - name: Cypress run
         run: |
           if [ "${{ matrix.browser }}" == "electron" ]; then
-            npm run test-electron
+            npm run test
           else
-            npm run test-browser -- --browser "${{ matrix.browser }}"
+            npm run test -- --browser "${{ matrix.browser }}"
           fi

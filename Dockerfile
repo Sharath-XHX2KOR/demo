@@ -9,7 +9,7 @@ FROM cypress/browsers:node-18.16.0-chrome-113.0.5672.92-1-ff-113.0-edge-113.0.17
 WORKDIR /e2e
 
 # ENV environment default_env_value
-ENV browsers default_browser_value
+ENV browsers=${browsers}
 # Copying the essential files that we must use to run our scripts.
 COPY . .
 

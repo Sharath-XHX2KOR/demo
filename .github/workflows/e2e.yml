@@ -26,7 +26,7 @@ jobs:
         run: |
           docker run --rm  \
             -v ${{ github.workspace }}/cypress/reports:/app/cypress/reports \
-            cypress-tests \
+            myimg \
             npm run test
 
       - name: Upload Test Artifacts

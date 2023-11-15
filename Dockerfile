@@ -8,7 +8,7 @@ FROM cypress/browsers:node-18.16.0-chrome-113.0.5672.92-1-ff-113.0-edge-113.0.17
 # WORKDIR /Top99TestAutomation
 WORKDIR /e2e
 
-ENV environment default_env_value
+# ENV environment default_env_value
 ENV browser default_browser_value
 # Copying the essential files that we must use to run our scripts.
 COPY . .
@@ -18,4 +18,4 @@ RUN npm i &&\
     npx cypress info
 
 # Executable commands the container will use[Exec Form]
-CMD ["npm", "run", "test", "${environment}", "-b ${browser}"]
+CMD ["npm", "run", "test", "-b ${browser}"]

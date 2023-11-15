@@ -28,7 +28,7 @@ jobs:
       - name: Run Cypress Tests in Docker Container
         run: |
           docker run -it --rm \
-            -v ${{ github.workspace }}:/e2e \
+            -v ./artifacts/edge:/e2e/cypress/screenshots \
             -w /e2e \
             myimg
 

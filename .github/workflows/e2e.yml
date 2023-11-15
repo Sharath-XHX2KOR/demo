@@ -25,7 +25,7 @@ jobs:
       - name: Run Cypress Tests in Docker Container
         run: |
           docker run --rm  \
-            -v ${{ github.workspace }}/cypress/reports:/app/cypress/reports --browser firefox\
+            -v ${{ github.workspace }}/cypress/reports:/app/cypress/reports -- --browser firefox\
             myimg \
             
 

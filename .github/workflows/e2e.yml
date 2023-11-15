@@ -19,7 +19,7 @@ jobs:
 
       - name: Build Docker Image
         run: |
-          docker build -t myimg .
+          docker build -t myimg Dockerfile_firefox
           docker images
 
       - name: Run Cypress Tests in Docker Container

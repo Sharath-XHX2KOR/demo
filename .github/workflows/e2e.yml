@@ -24,11 +24,11 @@ jobs:
 
       - name: Run Cypress Tests in Docker Container
         run: |
-          docker run --rm -it \
+          docker run --rm  \
             -v ${{ github.workspace }}/cypress/reports:/app/cypress/reports \
             cypress-tests \
             npm run test
-            
+
       - name: Upload Test Artifacts
         uses: actions/upload-artifact@v2
         with:

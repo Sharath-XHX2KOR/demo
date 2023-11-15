@@ -16,4 +16,4 @@ RUN npm i &&\
     npx cypress info
 
 # Executable commands the container will use[Exec Form]
-CMD ["npm","run","test", "--browser", "firefox"]
+CMD ["npm", "run", "test", "--browser", "firefox", "--headless"]

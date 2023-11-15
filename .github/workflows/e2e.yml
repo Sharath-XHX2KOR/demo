@@ -16,7 +16,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        
+
       - name: Build Docker Image
         run: |
           docker build -t myimg .
@@ -24,8 +24,11 @@ jobs:
 
       - name: Run Cypress Tests in Docker Container
         run: |
-          docker run -it --rm myimg
-
+          docker run --rm -it \
+            -v ${{ github.workspace }}/cypress/reports:/app/cypress/reports \
+            cypress-tests \
+            npm run test
+            
       - name: Upload Test Artifacts
         uses: actions/upload-artifact@v2
         with:

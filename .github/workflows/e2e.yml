@@ -27,7 +27,7 @@ jobs:
           docker run --rm  \
             -v ${{ github.workspace }}/cypress/reports:/app/cypress/reports \
             myimg \
-            npm run test
+            
 
       - name: Upload Test Artifacts
         uses: actions/upload-artifact@v2

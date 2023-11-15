@@ -16,10 +16,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      
-      - name: Set up Docker
-        uses: actions/setup-node@v3
-
+        
       - name: Build Docker Image
         run: |
           docker build -t myimg .

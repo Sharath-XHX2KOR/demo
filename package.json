@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
    
-    "test": "npx cypress run",
+    "test_chrome": "npx cypress run --browser chrome",
+    "test_firefox": "npx cypress run --browser firefox",
     "build": "npm run build"
   },
   "keywords": [],

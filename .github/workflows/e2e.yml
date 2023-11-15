@@ -19,7 +19,7 @@ jobs:
 
       - name: Build Docker Image
         run: |
-          docker buildx -t myimg .
+          docker build -t myimg .
           docker images
 
       - name: Run Cypress Tests in Docker Container

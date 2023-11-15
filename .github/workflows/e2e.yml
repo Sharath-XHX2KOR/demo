@@ -27,10 +27,7 @@ jobs:
 
       - name: Run Cypress Tests in Docker Container
         run: |
-          docker run -it --rm \
-            -v ./artifacts/edge:/e2e/cypress/screenshots \
-            -w /e2e \
-            myimg
+          docker run -it --rm myimg
 
       - name: Upload Test Artifacts
         uses: actions/upload-artifact@v2

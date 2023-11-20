@@ -38,7 +38,7 @@ jobs:
           docker run my-cypress-image npm run test \
             -v ./artifacts/screenshots:/app/cypress/screenshots \
             -v ./artifacts/videos:/app/cypress/videos \
-            -v ./artifacts/reports:/app/cypress/reports myimg
+            -v ./artifacts/reports:/app/cypress/reports my-cypress-image
         env:
           CI: true
           BROWSER: ${{ matrix.browser }}

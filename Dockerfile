@@ -18,4 +18,4 @@ RUN npm i &&\
     npx cypress info
 
 # Executable commands the container will use[Exec Form]
-CMD ["npx", "cypress", "run", "--browser ${browsers}"]
+CMD ["npx", "cypress", "run"]

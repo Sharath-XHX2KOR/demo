@@ -17,6 +17,7 @@ jobs:
       matrix:
         browser:
           - firefox
+          
 
     steps:
       - name: Checkout
@@ -34,7 +35,7 @@ jobs:
             
       - name: Build and run Cypress tests
         run: |
-          docker build -t my-cypress-image -f Dockerfile.chrome --build-arg BROWSER=${{ matrix.browser }} .
+          docker build -t my-cypress-image -f Dockerfile.chrome --build-arg BROWSER="chrome" .
           docker run --rm  \
             -v ./artifacts/screenshots:/app/cypress/screenshots \
             -v ./artifacts/videos:/app/cypress/videos \
@@ -47,4 +48,6 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: cypress-reports
-          path: cypress/videos
+          path: cypress/videos cypress/reports cypress/screenshots
+
+          

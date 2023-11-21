@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "npx cypress run",
-    "test_chrome": "npx cypress run --browser $BROWSER"
+    "test_chrome": "npx cypress run"
   },
   "keywords": [],
   "author": "",

@@ -1,0 +1,53 @@
+name: cross browser testing 
+
+on:
+  push:
+    branches:
+      - "integration"
+      - "main"
+  pull_request:
+    types: [opened,reopened]
+
+jobs:
+  cypress-run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    
+    strategy:
+      matrix:
+        browser:
+          - firefox
+          
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # - name: Build Docker Image
+      #   run: |
+      #     docker build -t myimg -f Dockerfile.edge .
+      #     docker images
+
+      # - name: Run Cypress Tests in Docker Container
+      #   run: |
+      #     docker run --rm  \
+      #       -v ${{ github.workspace }}/cypress/reports:/app/cypress/reports myimg
+            
+      - name: Build and run Cypress tests
+        run: |
+          docker build -t my-cypress-image -f Dockerfile.chrome --build-arg BROWSER=${{ matrix.browser }} .
+          docker run --rm  \
+            -v ./artifacts/screenshots:/app/cypress/screenshots \
+            -v ./artifacts/videos:/app/cypress/videos \
+            -v ./artifacts/reports:/app/cypress/reports my-cypress-image
+        env:
+          CI: true
+          BROWSER: ${{ matrix.browser }}
+
+      - name: Upload Test Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: cypress-reports
+          path: cypress/videos cypress/reports cypress/screenshots
+
+          

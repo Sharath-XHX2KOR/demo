@@ -4,13 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-   
     "test": "npx cypress run",
-    "test_firefox": "npx cypress run --browser firefox",
-    "test_chrome": "npx cypress run --browser $BROWSER",
-    "test_edge": "npx cypress run --browser edge",
-    "test_electron": "npx cypress run --browser electron",
-    "build": "npm run build"
+    "test_chrome": "npx cypress run --browser $BROWSER"
   },
   "keywords": [],
   "author": "",

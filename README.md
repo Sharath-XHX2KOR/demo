@@ -5,8 +5,7 @@
 
 |Test Features  |Test Case   |
 |:-----------:  |:--------:  |
-|User Management|Register    |
-|               |Sign in     |
+|User Management|Register    |Sign in     |
 |Landing Page   |About Us    |
 |               |Bosch Logo  |
 |               | Filters    |

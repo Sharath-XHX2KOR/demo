@@ -4,3 +4,5 @@
 |Test Features|Test Case|Status|
 |:-------------:|:---------:|:------:|
 |User Management|Register|Done|
+|               |:-------:|:-------:|
+|               |Sign in|Done|

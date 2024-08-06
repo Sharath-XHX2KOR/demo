@@ -4,7 +4,7 @@
 ### Test Scripts covered as of 08/06/2024
 
 |Test Features  |Test Case   |
-|:-----------:  |:--------:  |
+|:-----------:  |:--------:  |:--------:  |
 |User Management|Register    |Sign in     |
 |Landing Page   |About Us    |
 |               |Bosch Logo  |
